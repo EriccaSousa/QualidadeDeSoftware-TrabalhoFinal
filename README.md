@@ -8,7 +8,6 @@ Trabalho final da disciplina de qualidade de Software 2021.1
 
 </div>
 
-<br>
 <div align="center">
 
 ![LanguageCount](https://img.shields.io/github/languages/count/ericcasousa/QualidadeDeSoftware-TrabalhoFinal)
