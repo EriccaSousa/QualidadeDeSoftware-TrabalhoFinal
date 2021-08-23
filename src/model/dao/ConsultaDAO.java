@@ -51,33 +51,16 @@ public class ConsultaDAO {
     public List<Consulta> selecionar(String campoSel) {
 
         List<Consulta> consultas = new ArrayList<>();
-        String sql;
-        if (campoSel.contains("/")) {
-            sql = "SELECT * FROM consultas "
-                    + "WHERE cons_medcrm = " + campoSel;
-        } else {
-            sql = "SELECT * FROM consultas "
-                    + "WHERE cons_paccpf = " + campoSel;
-        }
-        PreparedStatement stmt = null;
+        String sql = sql(campoSel);
+		PreparedStatement stmt = null;
         ResultSet rs = null;
 
         try {
             stmt = con.prepareStatement(sql);
             rs = stmt.executeQuery();
             while (rs.next()) {
-                Consulta cons = new Consulta();
-                cons.setCodigo(rs.getInt("conscod"));
-                cons.setData(rs.getString("consdata"));
-                cons.setHora(rs.getString("conshora"));
-                cons.setStatus(rs.getString("consstatus"));
-                Paciente pac = new Paciente();
-                pac.setCpf(rs.getString("cons_paccpf"));
-                cons.setPaciente(pac);
-                Medico med = new Medico();
-                med.setCrm(rs.getString("cons_medcrm"));
-                cons.setMedico(med);
-                consultas.add(cons);
+                Consulta cons = cons(rs);
+				consultas.add(cons);
             }
         } catch (SQLException ex) {
             JOptionPane.showMessageDialog(null, "Falha na seleção de dados.", "Erro", JOptionPane.ERROR_MESSAGE);
@@ -87,6 +70,31 @@ public class ConsultaDAO {
         }
         return consultas;
     }
+
+	private String sql(String campoSel) {
+		String sql;
+		if (campoSel.contains("/")) {
+			sql = "SELECT * FROM consultas " + "WHERE cons_medcrm = " + campoSel;
+		} else {
+			sql = "SELECT * FROM consultas " + "WHERE cons_paccpf = " + campoSel;
+		}
+		return sql;
+	}
+
+	private Consulta cons(ResultSet rs) throws SQLException {
+		Consulta cons = new Consulta();
+		cons.setCodigo(rs.getInt("conscod"));
+		cons.setData(rs.getString("consdata"));
+		cons.setHora(rs.getString("conshora"));
+		cons.setStatus(rs.getString("consstatus"));
+		Paciente pac = new Paciente();
+		pac.setCpf(rs.getString("cons_paccpf"));
+		cons.setPaciente(pac);
+		Medico med = new Medico();
+		med.setCrm(rs.getString("cons_medcrm"));
+		cons.setMedico(med);
+		return cons;
+	}
 
     public List<String> selecionar(int consCod) {
 

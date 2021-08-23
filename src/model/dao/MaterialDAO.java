@@ -70,10 +70,8 @@ public class MaterialDAO {
             stmt = con.prepareStatement(sql);
             rs = stmt.executeQuery();
             while(rs.next()){
-                Material mat = new Material();
-                mat.setCodigo(rs.getInt("matcod"));
-                mat.setNome(rs.getString("matnome"));
-                materiais.add(mat);
+                Material mat = mat(rs);
+				materiais.add(mat);
             }
         } catch (SQLException ex) {
             JOptionPane.showMessageDialog(null, "Falha na seleção de dados.", "Erro", JOptionPane.ERROR_MESSAGE);
@@ -83,6 +81,13 @@ public class MaterialDAO {
         }
         return materiais;
     }
+
+	private Material mat(ResultSet rs) throws SQLException {
+		Material mat = new Material();
+		mat.setCodigo(rs.getInt("matcod"));
+		mat.setNome(rs.getString("matnome"));
+		return mat;
+	}
     
     public int getCod (String matnome){
         

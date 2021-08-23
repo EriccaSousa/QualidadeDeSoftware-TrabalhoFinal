@@ -57,12 +57,8 @@ public class ExameDAO {
             stmt = con.prepareStatement(sql);
             rs = stmt.executeQuery();
             while (rs.next()) {
-                Exame ex = new Exame();
-                ex.setCodigo(rs.getInt("examecod"));
-                ex.setNome(rs.getString("examenome"));
-                ex.setDescricao(rs.getString("examedesc"));
-                ex.setTipo(rs.getString("exametipo"));
-                exames.add(ex);
+                Exame ex = ex(rs);
+				exames.add(ex);
             }
         } catch (SQLException ex) {
             JOptionPane.showMessageDialog(null, "Falha na seleção de dados.", "Erro", JOptionPane.ERROR_MESSAGE);
@@ -72,6 +68,15 @@ public class ExameDAO {
         }
         return exames;
     }
+
+	private Exame ex(ResultSet rs) throws SQLException {
+		Exame ex = new Exame();
+		ex.setCodigo(rs.getInt("examecod"));
+		ex.setNome(rs.getString("examenome"));
+		ex.setDescricao(rs.getString("examedesc"));
+		ex.setTipo(rs.getString("exametipo"));
+		return ex;
+	}
 
     public Exame selecionarUm(int exCod) {
 

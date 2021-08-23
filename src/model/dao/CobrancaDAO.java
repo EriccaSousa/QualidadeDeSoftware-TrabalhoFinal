@@ -57,13 +57,8 @@ public class CobrancaDAO {
             stmt = con.prepareStatement(sql);
             rs = stmt.executeQuery();
             while (rs.next()) {
-                Cobranca cob = new Cobranca();
-                cob.setParcela(rs.getDouble("cobvalorparc"));
-                cob.setNumparcela(rs.getInt("cobnumparc"));
-                Consulta cons = new Consulta();
-                cons.setCodigo(rs.getInt("cons_cod"));
-                cob.setConsulta(cons);
-                cobrancas.add(cob);
+                Cobranca cob = cob(rs);
+				cobrancas.add(cob);
             }
         } catch (SQLException ex) {
             JOptionPane.showMessageDialog(null, "Falha na seleção de dados.", "Erro", JOptionPane.ERROR_MESSAGE);
@@ -73,6 +68,16 @@ public class CobrancaDAO {
         }
         return cobrancas;
     }
+
+	private Cobranca cob(ResultSet rs) throws SQLException {
+		Cobranca cob = new Cobranca();
+		cob.setParcela(rs.getDouble("cobvalorparc"));
+		cob.setNumparcela(rs.getInt("cobnumparc"));
+		Consulta cons = new Consulta();
+		cons.setCodigo(rs.getInt("cons_cod"));
+		cob.setConsulta(cons);
+		return cob;
+	}
 
     public Cobranca selectUm(int consCod) {
         String sql = "SELECT * FROM cobrancas "

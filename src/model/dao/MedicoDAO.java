@@ -54,14 +54,8 @@ public class MedicoDAO {
             stmt = con.prepareStatement(sql);
             rs = stmt.executeQuery();
             while(rs.next()){
-                Medico med = new Medico();
-                med.setCrm(rs.getString("medcrm"));
-                med.setNome(rs.getString("mednome"));
-                Especialidade esp = new Especialidade();
-                esp.setCodigo(rs.getInt("espcod"));
-                esp.setNome(rs.getString("espnome"));
-                med.setEspecialidade(esp);
-                medicos.add(med);               
+                Medico med = med(rs);
+				medicos.add(med);               
             }
         } catch (SQLException ex) {
             JOptionPane.showMessageDialog(null, "Falha na seleção de dados.", "Erro", JOptionPane.ERROR_MESSAGE);
@@ -71,6 +65,22 @@ public class MedicoDAO {
         return medicos;
         
     }
+
+	private Medico med(ResultSet rs) throws SQLException {
+		Medico med = new Medico();
+		med.setCrm(rs.getString("medcrm"));
+		med.setNome(rs.getString("mednome"));
+		Especialidade esp = esp(rs);
+		med.setEspecialidade(esp);
+		return med;
+	}
+
+	private Especialidade esp(ResultSet rs) throws SQLException {
+		Especialidade esp = new Especialidade();
+		esp.setCodigo(rs.getInt("espcod"));
+		esp.setNome(rs.getString("espnome"));
+		return esp;
+	}
     
     public boolean alterar (Medico medico, String oldCRM) {
         return medico.alterar(oldCRM, con, ic);

@@ -55,11 +55,8 @@ public class ConvenioDAO {
             stmt = con.prepareStatement(sql);
             rs = stmt.executeQuery();
             while(rs.next()){
-                Convenio conv = new Convenio();
-                conv.setCodigo(rs.getInt("convcod"));
-                conv.setNome(rs.getString("convnome"));
-                conv.setCobertura(rs.getString("convcober"));
-                convenios.add(conv);
+                Convenio conv = conv(rs);
+				convenios.add(conv);
             }
                     
         } catch (SQLException ex) {
@@ -70,6 +67,14 @@ public class ConvenioDAO {
         }
         return convenios;       
     }
+
+	private Convenio conv(ResultSet rs) throws SQLException {
+		Convenio conv = new Convenio();
+		conv.setCodigo(rs.getInt("convcod"));
+		conv.setNome(rs.getString("convnome"));
+		conv.setCobertura(rs.getString("convcober"));
+		return conv;
+	}
     
     public Convenio getconv (String nome, String cobertura){
         String sql = "SELECT * FROM convenios "+

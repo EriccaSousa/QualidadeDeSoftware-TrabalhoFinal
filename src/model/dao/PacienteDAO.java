@@ -55,11 +55,8 @@ public class PacienteDAO {
                 pac.setNome(rs.getString("pacnome"));
                 pac.setSexo(rs.getString("pacsexo"));
                 pac.setIdade(rs.getInt("pacidade"));
-                Convenio conv = new Convenio();
-                conv.setCodigo(rs.getInt("convcod"));
-                conv.setNome(rs.getString("convnome"));
-                conv.setCobertura(rs.getString("convcober"));
-                pac.setConvenio(conv);
+                Convenio conv = conv(rs);
+				pac.setConvenio(conv);
                 
             }
         } catch (SQLException ex) {
@@ -69,6 +66,14 @@ public class PacienteDAO {
         }
         return pac;
     }
+
+	private Convenio conv(ResultSet rs) throws SQLException {
+		Convenio conv = new Convenio();
+		conv.setCodigo(rs.getInt("convcod"));
+		conv.setNome(rs.getString("convnome"));
+		conv.setCobertura(rs.getString("convcober"));
+		return conv;
+	}
     
     public boolean alterar (Paciente pac, String oldCPF, String newConvnome, String newConvcob){
         return pac.alterar(oldCPF, newConvnome, newConvcob, con, ic);

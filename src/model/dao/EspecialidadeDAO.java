@@ -69,10 +69,8 @@ public class EspecialidadeDAO {
             stmt = con.prepareStatement(sql);
             rs = stmt.executeQuery();
             while(rs.next()){
-                Especialidade esp = new Especialidade();
-                esp.setCodigo(rs.getInt("espcod"));
-                esp.setNome(rs.getString("espnome"));
-                especialidades.add(esp);
+                Especialidade esp = esp(rs);
+				especialidades.add(esp);
             }
         } catch (SQLException ex) {
             JOptionPane.showMessageDialog(null, "Falha na Seleção de dados.", "Erro", JOptionPane.ERROR_MESSAGE);
@@ -83,6 +81,13 @@ public class EspecialidadeDAO {
         return especialidades;
         
     }
+
+	private Especialidade esp(ResultSet rs) throws SQLException {
+		Especialidade esp = new Especialidade();
+		esp.setCodigo(rs.getInt("espcod"));
+		esp.setNome(rs.getString("espnome"));
+		return esp;
+	}
     
     public boolean alterar (Especialidade esp, int cod){
         String sql = "UPDATE especialidades " +
