@@ -19,7 +19,7 @@ Trabalho final da disciplina de qualidade de Software 2021.1
 
 ## 🚀 Descrição do trabalho
 
-O principal objetivo do trabalho, é identificar e refatorar 40 Code smells.
+O principal objetivo do trabalho, é identificar e refatorar 40 Code smells. Para isso foi utilizado um repositório open source do Github, disponível [aqui](https://github.com/Eddusr/ProjetoEngSoft3). 
 
 ## 🤢 Code Smells
 
